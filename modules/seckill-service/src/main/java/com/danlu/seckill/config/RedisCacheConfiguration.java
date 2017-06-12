@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
@@ -24,16 +25,21 @@ public class RedisCacheConfiguration extends CachingConfigurerSupport {
             sb.append(target.getClass().getName());
             sb.append(method.getName());
             for (Object obj : params) {
-                sb.append(obj.toString());
+                if (obj != null)
+                    sb.append(obj.toString());
             }
             return sb.toString();
         };
     }
 
     @Bean
+    JedisConnectionFactory jedisConnectionFactory() {
+        return new JedisConnectionFactory();
+    }
 
+    @Bean
     public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory factory) {
-        RedisTemplate<?,?> redisTemplate = new RedisTemplate<>();
+        RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(factory);
         //key序列化方式;（不然会出现乱码;）,但是如果方法上有Long等非String类型的话，会报类型转换错误；
         //所以在没有自己定义key生成策略的时候，以下这个代码建议不要这么写，可以不配置或者自己实现ObjectRedisSerializer

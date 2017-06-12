@@ -26,4 +26,12 @@ public interface SeckillService {
      */
     int getStock(int id);
 
+    /**
+     * 秒杀商品计数器,
+     * 秒杀参数id的商品，
+     * @param id
+     * @return  <= 0 ：表示没有商品，秒杀失败
+     */
+    int seckill(int id);
+
 }
