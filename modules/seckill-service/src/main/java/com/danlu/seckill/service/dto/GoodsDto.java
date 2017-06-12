@@ -1,33 +1,25 @@
-package com.danlu.seckill.entity;
+package com.danlu.seckill.service.dto;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * 商品表
- * Created by lenovo on 2017/6/11.
+ * Created by lenovo on 2017/6/12.
  */
-@Entity
-public class Goods implements Serializable {
+public class GoodsDto implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(length = 20)
     private String title;
 
-    @Column(length = 20)
     private String name;
 
-    @Column(length = 50)
     private String summary;
 
-    @Column
     private boolean putaway;
 
-    @Column
     private boolean seckill;
+
+    private SeckillDto seckillDto;
 
     public int getId() {
         return id;
@@ -75,5 +67,13 @@ public class Goods implements Serializable {
 
     public void setSeckill(boolean seckill) {
         this.seckill = seckill;
+    }
+
+    public SeckillDto getSeckillDto() {
+        return seckillDto;
+    }
+
+    public void setSeckillDto(SeckillDto seckillDto) {
+        this.seckillDto = seckillDto;
     }
 }

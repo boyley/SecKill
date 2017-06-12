@@ -12,6 +12,6 @@ import java.util.Optional;
 @Repository
 public interface SeckillRepository extends PagingAndSortingRepository<Seckill, Integer> {
 
-    Optional<Seckill> findOne(int id);
+    Optional<Seckill> findOneByGoodsId(int id);
 
 }

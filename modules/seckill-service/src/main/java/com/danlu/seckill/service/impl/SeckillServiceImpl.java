@@ -3,8 +3,10 @@ package com.danlu.seckill.service.impl;
 import com.danlu.seckill.entity.Seckill;
 import com.danlu.seckill.repository.SeckillRepository;
 import com.danlu.seckill.service.SeckillService;
+import com.danlu.seckill.service.dto.SeckillDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
@@ -12,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * Created by lenovo on 2017/6/11.
@@ -40,6 +44,15 @@ public class SeckillServiceImpl implements SeckillService {
 
         });
         return page;
+    }
+
+    @Override
+    public Optional<SeckillDto> findOneByGoodsId(int goodsId) {
+        return this.seckillRepository.findOneByGoodsId(goodsId).map(seckill -> {
+            SeckillDto dto = new SeckillDto();
+            BeanUtils.copyProperties(seckill,dto);
+            return dto;
+        });
     }
 
     private boolean hasKey(int id) {
