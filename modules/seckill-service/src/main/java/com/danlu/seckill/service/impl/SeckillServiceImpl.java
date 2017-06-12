@@ -27,9 +27,6 @@ public class SeckillServiceImpl implements SeckillService {
     private SeckillRepository seckillRepository;
 
     @Autowired
-    private ApplicationContext applicationContext;
-
-    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override
