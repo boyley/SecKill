@@ -16,6 +16,10 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: NON_NULL  # always|non_null|non_absent|non_default|non_empty
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
 logging:
   level:
     root: INFO

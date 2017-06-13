@@ -8,14 +8,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 /**
  * Created by lenovo on 2017/6/11.
  */
-@RestController("/seckill")
-public class SeckillController {
+@RequestMapping("/seckill")
+@RestController
+public class GoodsController {
 
     @Autowired
     private GoodsService goodsService;
