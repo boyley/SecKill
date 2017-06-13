@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by lenovo on 2017/6/13.
  */
-public interface ReceiverAddressService {
+public interface UserService {
 
-    List<ReceiverAddress> findAll(int id);
+    List<ReceiverAddress> findAllReceiverAddress(int id);
 }
