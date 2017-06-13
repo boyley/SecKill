@@ -16,6 +16,7 @@
         <module>seckill-app</module>
         <module>seckill-provider</module>
         <module>eureka-server</module>
+        <module>user-provider</module>
     </modules>
 
     <properties>

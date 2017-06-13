@@ -1,9 +1,9 @@
 
 server:
-  port: 8000
+  port: 8010
 spring:
   application:
-    name: seckill-provider # 项⽬名称尽量⽤⼩写
+    name: user-provider # 项⽬名称尽量⽤⼩写
   datasource:
     username: root
     driver-class-name: com.mysql.jdbc.Driver
