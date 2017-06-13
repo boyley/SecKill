@@ -15,6 +15,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+    show-sql: true
 logging:
   level:
     root: INFO

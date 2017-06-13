@@ -1,7 +1,7 @@
 package com.danlu.seckill.controller;
 
+import com.danlu.seckill.entity.Goods;
 import com.danlu.seckill.service.GoodsService;
-import com.danlu.seckill.service.dto.GoodsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +21,7 @@ public class SeckillController {
     private GoodsService goodsService;
 
     @GetMapping(value = "/list")
-    Page<GoodsDto> list(@PageableDefault(value = 15, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    Page<Goods> list(@PageableDefault(value = 15, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         return goodsService.list(pageable);
     }
 }

@@ -29,6 +29,9 @@ public class Goods implements Serializable {
     @Column
     private boolean seckill;
 
+    @Transient
+    private Seckill seckilled;
+
     public int getId() {
         return id;
     }
@@ -75,5 +78,13 @@ public class Goods implements Serializable {
 
     public void setSeckill(boolean seckill) {
         this.seckill = seckill;
+    }
+
+    public Seckill getSeckilled() {
+        return seckilled;
+    }
+
+    public void setSeckilled(Seckill seckilled) {
+        this.seckilled = seckilled;
     }
 }

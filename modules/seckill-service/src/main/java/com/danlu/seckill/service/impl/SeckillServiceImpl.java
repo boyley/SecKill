@@ -3,19 +3,13 @@ package com.danlu.seckill.service.impl;
 import com.danlu.seckill.entity.Seckill;
 import com.danlu.seckill.repository.SeckillRepository;
 import com.danlu.seckill.service.SeckillService;
-import com.danlu.seckill.service.dto.SeckillDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.ApplicationContext;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 
 /**
  * Created by lenovo on 2017/6/11.
@@ -34,25 +28,13 @@ public class SeckillServiceImpl implements SeckillService {
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override
-    @Cacheable(value = "seckill",keyGenerator = "keyGenerator")
-    public Page<Seckill> list(Pageable pageable) {
-        Page<Seckill> page = seckillRepository.findAll(pageable);
-        page.getContent().forEach(seckill -> {
-            if (!this.hasKey(seckill.getId())) {
-                redisTemplate.opsForValue().set(this.getSeckillKey(seckill.getId()), seckill.getStock());
-            }
-
-        });
-        return page;
-    }
-
-    @Override
-    public Optional<SeckillDto> findOneByGoodsId(int goodsId) {
-        return this.seckillRepository.findOneByGoodsId(goodsId).map(seckill -> {
-            SeckillDto dto = new SeckillDto();
-            BeanUtils.copyProperties(seckill,dto);
-            return dto;
-        });
+    public Seckill findOneByGoodsId(int goodsId) {
+        return this.seckillRepository.findOne((root, query, cb) ->
+                cb.and(cb.greaterThan(root.get("endTime").as(LocalDateTime.class), LocalDateTime.now()),
+                        cb.lessThan(root.get("startTime").as(LocalDateTime.class), LocalDateTime.now()),
+                        cb.equal(root.get("goodsId").as(Integer.class), goodsId)
+                )
+        );
     }
 
     private boolean hasKey(int id) {

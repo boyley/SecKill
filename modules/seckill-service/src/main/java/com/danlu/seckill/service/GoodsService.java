@@ -1,6 +1,6 @@
 package com.danlu.seckill.service;
 
-import com.danlu.seckill.service.dto.GoodsDto;
+import com.danlu.seckill.entity.Goods;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -9,5 +9,5 @@ import org.springframework.data.domain.Pageable;
  */
 public interface GoodsService {
 
-    Page<GoodsDto> list(Pageable pageable);
+    Page<Goods> list(Pageable pageable);
 }

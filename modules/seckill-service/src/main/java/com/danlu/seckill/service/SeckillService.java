@@ -1,9 +1,9 @@
 package com.danlu.seckill.service;
 
 import com.danlu.seckill.entity.Seckill;
-import com.danlu.seckill.service.dto.SeckillDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
@@ -14,20 +14,12 @@ import java.util.Optional;
 public interface SeckillService {
 
     /**
-     * 分页获取秒杀商品列表
-     *
-     * @param pageable
-     * @return
-     */
-    Page<Seckill> list(Pageable pageable);
-
-    /**
      * 根据id获取商品
      *
      * @param goodsId
      * @return
      */
-    Optional<SeckillDto> findOneByGoodsId(int goodsId);
+    Seckill findOneByGoodsId(int goodsId);
 
     /**
      * 获取商品的库存
