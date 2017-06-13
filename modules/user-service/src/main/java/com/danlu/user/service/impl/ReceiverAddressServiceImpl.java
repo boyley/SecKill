@@ -4,6 +4,7 @@ import com.danlu.user.entity.ReceiverAddress;
 import com.danlu.user.repository.ReceiverAddressRepository;
 import com.danlu.user.service.ReceiverAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,6 @@ public class ReceiverAddressServiceImpl implements ReceiverAddressService {
     public List<ReceiverAddress> findAll(int id) {
         return receiverAddressRepository.findAll((root, query, cb) -> cb.and(
                 cb.equal(root.get("userId").as(Integer.class), id)
-        ));
+        ), new Sort(Sort.Direction.DESC, "id"));
     }
 }
