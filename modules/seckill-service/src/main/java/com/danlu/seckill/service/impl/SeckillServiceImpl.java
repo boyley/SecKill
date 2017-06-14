@@ -29,12 +29,14 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public Seckill findOneByGoodsId(int goodsId) {
-        return this.seckillRepository.findOne((root, query, cb) ->
+        Seckill seckill = this.seckillRepository.findOne((root, query, cb) ->
                 cb.and(cb.greaterThan(root.get("endTime").as(LocalDateTime.class), LocalDateTime.now()),
                         cb.lessThan(root.get("startTime").as(LocalDateTime.class), LocalDateTime.now()),
                         cb.equal(root.get("goodsId").as(Integer.class), goodsId)
                 )
         );
+
+        return seckill;
     }
 
     private boolean hasKey(int id) {

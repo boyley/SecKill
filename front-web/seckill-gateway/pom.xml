@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>seckill-provider</artifactId>
+    <artifactId>seckill-gateway</artifactId>
     <packaging>jar</packaging>
 
-    <name>seckill-provider</name>
+    <name>seckill-gateway</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -20,15 +20,11 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
+            <artifactId>spring-cloud-starter-zuul</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.danlu.seckill</groupId>
-            <artifactId>seckill-service</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
     </dependencies>
-
-
-
 </project>
