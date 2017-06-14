@@ -6,6 +6,7 @@ import com.danlu.seckill.service.SeckillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class SeckillServiceImpl implements SeckillService {
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override
+    @Cacheable(value = "goods", keyGenerator = "keyGenerator")
     public Seckill findOneByGoodsId(int goodsId) {
         Seckill seckill = this.seckillRepository.findOne((root, query, cb) ->
                 cb.and(cb.greaterThan(root.get("endTime").as(LocalDateTime.class), LocalDateTime.now()),

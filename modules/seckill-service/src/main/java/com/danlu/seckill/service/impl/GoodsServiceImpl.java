@@ -6,6 +6,7 @@ import com.danlu.seckill.repository.GoodsRepository;
 import com.danlu.seckill.service.GoodsService;
 import com.danlu.seckill.service.SeckillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,12 @@ public class GoodsServiceImpl implements GoodsService {
     private SeckillService seckillService;
 
     @Override
+    @Cacheable(value = "goods", keyGenerator = "keyGenerator")
     public Page<Goods> list(Pageable pageable) {
         Page<Goods> page = goodsRepository.findAll(pageable);
         page.getContent().stream().filter(goods -> goods.isSeckill()).forEach(goods -> {
             Seckill seckill = this.seckillService.findOneByGoodsId(goods.getId());
-            if(seckill == null) {
+            if (seckill == null) {
                 goods.setSeckill(false);
                 this.goodsRepository.save(goods);
             }
