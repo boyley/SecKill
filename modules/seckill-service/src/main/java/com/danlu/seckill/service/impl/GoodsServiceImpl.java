@@ -24,7 +24,6 @@ public class GoodsServiceImpl implements GoodsService {
     private SeckillService seckillService;
 
     @Override
-    @Cacheable(value = "goods", keyGenerator = "keyGenerator")
     public Page<Goods> list(Pageable pageable) {
         Page<Goods> page = goodsRepository.findAll(pageable);
         page.getContent().stream().filter(goods -> goods.isSeckill()).forEach(goods -> {

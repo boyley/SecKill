@@ -40,9 +40,9 @@ public class RedisCacheConfiguration extends CachingConfigurerSupport {
     }
 
     @Bean
-    public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory factory) {
-        RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(factory);
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory jedisConnectionFactory) {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(jedisConnectionFactory);
         //key序列化方式;（不然会出现乱码;）,但是如果方法上有Long等非String类型的话，会报类型转换错误；
         //所以在没有自己定义key生成策略的时候，以下这个代码建议不要这么写，可以不配置或者自己实现ObjectRedisSerializer
         //或者JdkSerializationRedisSerializer序列化方式;

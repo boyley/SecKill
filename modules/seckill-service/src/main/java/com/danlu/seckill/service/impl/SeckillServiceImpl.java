@@ -37,7 +37,11 @@ public class SeckillServiceImpl implements SeckillService {
                         cb.equal(root.get("goodsId").as(Integer.class), goodsId)
                 )
         );
-
+        int id = seckill.getId();
+        if(!hasKey(id)) {
+            redisTemplate.opsForValue().set(this.getSeckillKey(id), seckill.getStock());
+        }
+        seckill.setStock(this.getStock(id));
         return seckill;
     }
 
