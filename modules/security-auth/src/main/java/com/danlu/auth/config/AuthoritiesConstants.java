@@ -1,4 +1,4 @@
-package com.danlu.seckill.config;
+package com.danlu.auth.config;
 
 public final class AuthoritiesConstants {
 

@@ -1,9 +1,9 @@
-package com.danlu.seckill.config;
+package com.danlu.auth.config;
 
-import com.danlu.seckill.config.security.AjaxAuthenticationFailureHandler;
-import com.danlu.seckill.config.security.AjaxAuthenticationSuccessHandler;
-import com.danlu.seckill.config.security.AjaxLogoutSuccessHandler;
-import com.danlu.seckill.config.security.Http401UnauthorizedEntryPoint;
+import com.danlu.auth.security.AjaxAuthenticationFailureHandler;
+import com.danlu.auth.security.AjaxAuthenticationSuccessHandler;
+import com.danlu.auth.security.AjaxLogoutSuccessHandler;
+import com.danlu.auth.security.Http401UnauthorizedEntryPoint;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

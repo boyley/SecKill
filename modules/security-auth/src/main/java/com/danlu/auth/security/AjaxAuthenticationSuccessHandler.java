@@ -1,4 +1,4 @@
-package com.danlu.seckill.config.security;
+package com.danlu.auth.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
