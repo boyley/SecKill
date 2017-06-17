@@ -27,5 +27,10 @@
             <artifactId>user-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.danlu.seckill</groupId>
+            <artifactId>security-auth</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
