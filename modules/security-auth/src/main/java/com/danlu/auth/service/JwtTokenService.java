@@ -163,7 +163,7 @@ public class JwtTokenService implements Serializable {
         final Instant created = getCreatedDateFromToken(token);
         //final Date expiration = getExpirationDateFromToken(token);
         return (
-                username.equals(user.getLogin())
+                username.equals(user.getUsername())
                         && !isTokenExpired(token)
                         && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate()));
     }

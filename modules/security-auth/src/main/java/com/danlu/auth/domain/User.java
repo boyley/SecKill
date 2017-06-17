@@ -1,12 +1,12 @@
 package com.danlu.auth.domain;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Collection;
@@ -21,16 +21,34 @@ import java.util.Set;
 public class User extends AbstractAuditingEntity implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "password_hash", length = 60)
     private String password;
+    @Column(length = 50, unique = true, nullable = false)
     private String username;
-    private Set<? extends GrantedAuthority> authorities;
+    @Column(name = "account_non_expired", nullable = false)
     private boolean accountNonExpired;
+    @Column(name = "account_non_locked", nullable = false)
     private boolean accountNonLocked;
+    @Column(name = "credentials_non_expired", nullable = false)
     private boolean credentialsNonExpired;
+    @Column(name = "enabled", nullable = false)
     private boolean enabled;
+    @Column(name = "activated", nullable = false)
     private boolean activated;
+    @Column(name = "last_password_reset_date", nullable = false)
     private Instant lastPasswordResetDate;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @BatchSize(size = 20)
+    private Set<? extends GrantedAuthority> authorities;
 
 
     public void setPassword(String password) {
