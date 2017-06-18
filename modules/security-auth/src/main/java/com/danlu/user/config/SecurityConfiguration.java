@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import javax.annotation.PostConstruct;
 
 /**
- * jwt
+ * jwt test
  */
 @Configuration
 @EnableWebSecurity
