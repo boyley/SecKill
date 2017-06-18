@@ -6,6 +6,7 @@ import com.danlu.user.security.exceptions.UserNotActivatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,6 +33,7 @@ public class DomainUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional
+    @Cacheable(value = "user", keyGenerator = "keyGenerator")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.debug("Authenticating {}", username);
         String lowercaseLogin = username.toLowerCase(Locale.ENGLISH);
