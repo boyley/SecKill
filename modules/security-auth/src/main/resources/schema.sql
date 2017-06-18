@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `username` varchar(50) DEFAULT NULL COMMENT '用户名',
-  `password_hash` varchar(50) DEFAULT NULL COMMENT '密码',
+  `password_hash` varchar(100) DEFAULT NULL COMMENT '密码',
   `account_non_expired` bit(1) DEFAULT NULL COMMENT '账号是否未过期',
   `account_non_locked` bit(1) DEFAULT NULL COMMENT '账号是否未锁定',
   `credentials_non_expired` bit(1) DEFAULT NULL COMMENT '密码是否为过期',

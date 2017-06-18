@@ -8,18 +8,18 @@ import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,11 +27,9 @@ import java.io.IOException;
 /**
  * Created by lenovo on 2017/6/16.
  */
-public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-
-    @Autowired
-    private MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter;
+    private static final String OPTIONS_METHOD = "OPTIONS";
 
     @Autowired
     private JwtTokenService tokenService;
@@ -39,72 +37,35 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     @Value("${jwt.header}")
     private String tokenHeader;
 
-    private boolean postOnly = true;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
-        super(new AntPathRequestMatcher("/login", "POST"));
-        this.setAuthenticationManager(authenticationManager);
-    }
-
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-            throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse httpResponse = (HttpServletResponse) res;
-        String authToken = request.getHeader(this.tokenHeader);
-
-        logger.info("checking authentication für user " + authToken);
-
-        if (authToken != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            if (tokenService.validateToken(authToken)) {
-                super.doFilter(req, res, chain);
-            }
-        }
-        super.doFilter(req, res, chain);
-    }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-        if (postOnly && !request.getMethod().equals("POST")) {
-            throw new AuthenticationServiceException(
-                    "Authentication method not supported: " + request.getMethod());
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+        String authToken = request.getHeader(this.tokenHeader);
+        // authToken.startsWith("Bearer ")
+        // String authToken = header.substring(7);
+        String username = tokenService.getUsernameFromToken(authToken);
+
+        logger.info("checking authentication für user " + username);
+
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+            // It is not compelling necessary to load the use details from the database. You could also store the information
+            // in the token and read it from it. It's up to you ;)
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+
+            // For simple validation it is completely sufficient to just check the token integrity. You don't have to call
+            // the database compellingly. Again it's up to you ;)
+            if (tokenService.validateToken(authToken)) {
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                logger.info("authenticated user " + username + ", setting security context");
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
 
-        HttpInputMessage inputMessage = new ServletServerHttpRequest(request);
-        User user = (User) mappingJackson2HttpMessageConverter.read(User.class, inputMessage);
-
-        String username = user.getUsername();
-        String password = user.getPassword();
-
-        if (username == null) {
-            username = "";
-        }
-
-        if (password == null) {
-            password = "";
-        }
-
-        username = username.trim();
-
-        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
-                username, password);
-
-        // Allow subclasses to set the "details" property
-        setDetails(request, authRequest);
-
-        return this.getAuthenticationManager().authenticate(authRequest);
-    }
-
-    protected void setDetails(HttpServletRequest request,
-                              UsernamePasswordAuthenticationToken authRequest) {
-        authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
-    }
-
-    /**
-     * 是否必须用post请求
-     *
-     * @param postOnly
-     */
-    public void setPostOnly(boolean postOnly) {
-        this.postOnly = postOnly;
+        chain.doFilter(request, response);
     }
 }

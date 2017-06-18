@@ -20,7 +20,7 @@ public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "password_hash", length = 60)
+    @Column(name = "password_hash", length = 100)
     private String password;
     @Column(length = 50, unique = true, nullable = false)
     private String username;
