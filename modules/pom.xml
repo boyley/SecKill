@@ -13,7 +13,6 @@
     <name>modules</name>
     <url>http://maven.apache.org</url>
     <modules>
-        <module>security-auth</module>
         <module>seckill-service</module>
         <module>user-service</module>
         <module>cacheable-config</module>
