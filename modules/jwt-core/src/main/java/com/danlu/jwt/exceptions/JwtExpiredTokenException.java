@@ -1,17 +1,16 @@
-package com.danlu.user.security.exceptions;
+package com.danlu.jwt.exceptions;
 
-import com.danlu.user.security.model.token.JwtToken;
-import org.springframework.security.core.AuthenticationException;
+
+import com.danlu.jwt.security.model.token.JwtToken;
 
 /**
- * 
  * @author vladimir.stankovic
- *
- * Aug 3, 2016
+ *         <p>
+ *         Aug 3, 2016
  */
-public class JwtExpiredTokenException extends AuthenticationException {
+public class JwtExpiredTokenException extends RuntimeException {
     private static final long serialVersionUID = -5959543783324224864L;
-    
+
     private JwtToken token;
 
     public JwtExpiredTokenException(String msg) {

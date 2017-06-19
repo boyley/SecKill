@@ -1,12 +1,12 @@
-package com.danlu.user.security.config;
+package com.danlu.jwt.config;
 
-import com.danlu.user.security.model.token.JwtToken;
+import com.danlu.jwt.security.model.token.JwtToken;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConfigurationProperties(prefix = "jwt.security")
-    public class JwtSettings {
+public class JwtSettings {
     /**
      * {@link JwtToken} will expire after this time.
      */
@@ -16,17 +16,17 @@ import org.springframework.context.annotation.Configuration;
      * Token issuer.
      */
     private String tokenIssuer;
-    
+
     /**
      * Key is used to sign {@link JwtToken}.
      */
     private String tokenSigningKey;
-    
+
     /**
      * {@link JwtToken} can be refreshed during this timeframe.
      */
     private Integer refreshTokenExpTime;
-    
+
     public Integer getRefreshTokenExpTime() {
         return refreshTokenExpTime;
     }
@@ -38,22 +38,23 @@ import org.springframework.context.annotation.Configuration;
     public Integer getTokenExpirationTime() {
         return tokenExpirationTime;
     }
-    
+
     public void setTokenExpirationTime(Integer tokenExpirationTime) {
         this.tokenExpirationTime = tokenExpirationTime;
     }
-    
+
     public String getTokenIssuer() {
         return tokenIssuer;
     }
+
     public void setTokenIssuer(String tokenIssuer) {
         this.tokenIssuer = tokenIssuer;
     }
-    
+
     public String getTokenSigningKey() {
         return tokenSigningKey;
     }
-    
+
     public void setTokenSigningKey(String tokenSigningKey) {
         this.tokenSigningKey = tokenSigningKey;
     }

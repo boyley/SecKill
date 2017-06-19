@@ -1,8 +1,8 @@
 package com.danlu.user.security.auth.ajax;
 
-import com.danlu.user.security.model.UserContext;
-import com.danlu.user.security.model.token.JwtToken;
-import com.danlu.user.security.model.token.JwtTokenFactory;
+import com.danlu.jwt.security.model.UserContext;
+import com.danlu.jwt.security.model.token.JwtToken;
+import com.danlu.jwt.security.model.token.JwtTokenFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * AjaxAwareAuthenticationSuccessHandler
@@ -46,7 +47,7 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
                                         Authentication authentication) throws IOException, ServletException {
         User user = (User) authentication.getPrincipal();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        UserContext userContext = UserContext.create(user.getUsername(),authorities);
+        UserContext userContext = UserContext.create(user.getUsername(),authorities.stream().map(s -> s.getAuthority()).collect(Collectors.toList()));
         
         JwtToken accessToken = tokenFactory.createAccessJwtToken(userContext);
         JwtToken refreshToken = tokenFactory.createRefreshToken(userContext);

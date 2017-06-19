@@ -1,8 +1,8 @@
 package com.danlu.user.security.auth;
 
 
-import com.danlu.user.security.model.UserContext;
-import com.danlu.user.security.model.token.RawAccessJwtToken;
+import com.danlu.jwt.security.model.UserContext;
+import com.danlu.jwt.security.model.token.RawAccessJwtToken;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 

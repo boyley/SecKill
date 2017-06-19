@@ -1,6 +1,6 @@
 package com.danlu.user.security.auth.jwt.extractor;
 
-import org.apache.commons.lang3.StringUtils;
+import com.danlu.jwt.util.StringUtils;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.stereotype.Component;
 
