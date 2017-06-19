@@ -1,4 +1,4 @@
-package com.danlu.user.security.auth.jwt.verifier;
+package com.danlu.jwt.verifier;
 
 import org.springframework.stereotype.Component;
 

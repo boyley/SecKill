@@ -5,7 +5,7 @@ import com.danlu.user.security.Http401UnauthorizedEntryPoint;
 import com.danlu.user.security.auth.ajax.AjaxLoginProcessingFilter;
 import com.danlu.user.security.auth.jwt.JwtTokenAuthenticationProcessingFilter;
 import com.danlu.user.security.auth.jwt.SkipPathRequestMatcher;
-import com.danlu.user.security.auth.jwt.extractor.TokenExtractor;
+import com.danlu.jwt.extractor.TokenExtractor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

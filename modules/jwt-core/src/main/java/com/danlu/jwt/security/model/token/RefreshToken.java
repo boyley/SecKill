@@ -1,11 +1,11 @@
 package com.danlu.jwt.security.model.token;
 
 
-import com.danlu.jwt.exceptions.BadCredentialsException;
 import com.danlu.jwt.exceptions.JwtExpiredTokenException;
 import com.danlu.jwt.security.model.Scopes;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import org.springframework.security.authentication.BadCredentialsException;
 
 import java.util.List;
 import java.util.Optional;

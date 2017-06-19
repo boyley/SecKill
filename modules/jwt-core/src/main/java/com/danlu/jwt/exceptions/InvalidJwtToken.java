@@ -1,4 +1,4 @@
-package com.danlu.user.security.exceptions;
+package com.danlu.jwt.exceptions;
 
 /**
  * JwtTokenNotValid

@@ -3,7 +3,7 @@ package com.danlu.user.security.auth.jwt;
 
 import com.danlu.jwt.security.model.token.RawAccessJwtToken;
 import com.danlu.user.security.auth.JwtAuthenticationToken;
-import com.danlu.user.security.auth.jwt.extractor.TokenExtractor;
+import com.danlu.jwt.extractor.TokenExtractor;
 import com.danlu.user.security.config.SecurityConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

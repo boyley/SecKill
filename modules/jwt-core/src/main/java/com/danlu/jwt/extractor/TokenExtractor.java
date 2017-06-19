@@ -1,4 +1,4 @@
-package com.danlu.user.security.auth.jwt.extractor;
+package com.danlu.jwt.extractor;
 
 /**
  * Implementations of this interface should always return raw base-64 encoded
