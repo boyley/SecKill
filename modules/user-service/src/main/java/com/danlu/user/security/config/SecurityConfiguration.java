@@ -3,7 +3,6 @@ package com.danlu.user.security.config;
 import com.danlu.user.filter.CustomCorsFilter;
 import com.danlu.user.security.Http401UnauthorizedEntryPoint;
 import com.danlu.user.security.auth.ajax.AjaxLoginProcessingFilter;
-import com.danlu.user.security.auth.jwt.JwtAuthenticationProvider;
 import com.danlu.user.security.auth.jwt.JwtTokenAuthenticationProcessingFilter;
 import com.danlu.user.security.auth.jwt.SkipPathRequestMatcher;
 import com.danlu.user.security.auth.jwt.extractor.TokenExtractor;
@@ -48,14 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationFailureHandler failureHandler;
     @Autowired
-    private JwtAuthenticationProvider jwtAuthenticationProvider;
-
-    @Autowired
     private UserDetailsService userDetailsService;
-
     @Autowired
     private TokenExtractor tokenExtractor;
-
     @Autowired
     private AuthenticationManager authenticationManager;
 
