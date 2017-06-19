@@ -1,23 +1,22 @@
 package com.danlu.user.security.model;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by lenovo on 2017/6/18.
  */
 public class UserContext {
     private final String username;
-    private final Collection<? extends GrantedAuthority> authorities;
+    private final List<String> authorities;
 
-    private UserContext(String username, Collection<? extends GrantedAuthority> authorities) {
+    private UserContext(String username, List<String> authorities) {
         this.username = username;
         this.authorities = authorities;
     }
 
-    public static UserContext create(String username, Collection<? extends GrantedAuthority> authorities) {
+    public static UserContext create(String username, List<String> authorities) {
         if (StringUtils.isBlank(username)) throw new IllegalArgumentException("Username is blank: " + username);
         return new UserContext(username, authorities);
     }
@@ -26,7 +25,7 @@ public class UserContext {
         return username;
     }
 
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public List<String> getAuthorities() {
         return authorities;
     }
 }
