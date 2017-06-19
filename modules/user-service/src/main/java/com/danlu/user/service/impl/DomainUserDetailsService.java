@@ -33,7 +33,7 @@ public class DomainUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional
-    @Cacheable(value = "user", keyGenerator = "keyGenerator")
+//    @Cacheable(value = "user", keyGenerator = "keyGenerator")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.debug("Authenticating {}", username);
         String lowercaseLogin = username.toLowerCase(Locale.ENGLISH);

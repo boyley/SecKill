@@ -1,6 +1,6 @@
 
-INSERT INTO `user` VALUES ('1', 'admin', '$2a$10$KETjYMSGBd7AbNNp3EXoMeeef2wQg1IMQF/MYgldkZ34OGxJ4RpMu', '', '', '', '', '');
-INSERT INTO `user` VALUES ('2', 'user', '$2a$10$BS1hdRz88hYDLuuBUx.Uo.fQ7VVRMbdJr0N6v5M1fY1vAE5rWlhp6', '', '', '', '', '');
+INSERT INTO `user` VALUES ('1', 'admin', '$2a$10$4RdTN5/PvtNAAq09UVcYb.1PY.4ddVZ6I.COhj67vbBAARvrEfBxi', '', '', '', '', '');
+INSERT INTO `user` VALUES ('2', 'user', '$2a$10$MI83.tIkfyyCAlU6twhg7e.TTAxaxKPf/YgWa1pzghcBp3v4DpsKC', '', '', '', '', '');
 
 INSERT INTO `authority` VALUES ('1', 'admin');
 INSERT INTO `authority` VALUES ('2', 'user');

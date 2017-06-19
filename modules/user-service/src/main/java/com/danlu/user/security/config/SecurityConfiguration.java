@@ -2,7 +2,6 @@ package com.danlu.user.security.config;
 
 import com.danlu.user.filter.CustomCorsFilter;
 import com.danlu.user.security.Http401UnauthorizedEntryPoint;
-import com.danlu.user.security.auth.ajax.AjaxAuthenticationProvider;
 import com.danlu.user.security.auth.ajax.AjaxLoginProcessingFilter;
 import com.danlu.user.security.auth.jwt.JwtAuthenticationProvider;
 import com.danlu.user.security.auth.jwt.JwtTokenAuthenticationProcessingFilter;
@@ -19,6 +18,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -46,9 +48,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationFailureHandler failureHandler;
     @Autowired
-    private AjaxAuthenticationProvider ajaxAuthenticationProvider;
-    @Autowired
     private JwtAuthenticationProvider jwtAuthenticationProvider;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private TokenExtractor tokenExtractor;
@@ -75,6 +78,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
@@ -82,8 +90,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(ajaxAuthenticationProvider);
-        auth.authenticationProvider(jwtAuthenticationProvider);
+        try {
+            auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
